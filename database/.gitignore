@@ -1,0 +1,48 @@
+# Laravel Specific
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+.env
+.env.*          # Any environment-specific env files
+Homestead.yaml
+Homestead.json
+
+# Ignore SQLite and database dump files
+/database/*.sqlite
+/database/*.sql
+*.sqlite
+*.sql
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDEs and Editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Laravel Logs, Cache, etc.
+/storage/logs/*
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/testing/*
+
+# Composer PHAR
+composer.phar
+
+# NPM/Yarn
+npm-debug.log
+yarn-error.log
+
+# SQLite DBs (as you wanted)
+*.sqlite*
+*.sqlite3
+
+# Deployment-related (optional)
+.env.backup
+.env.production
+.env.local
