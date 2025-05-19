@@ -24,6 +24,14 @@
                 </a>
             </li>
 
+            {{-- About --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('about.index') }}">
+                    <i class="link-icon" data-feather="tag"></i>
+                    <span class="link-title">About</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </nav>

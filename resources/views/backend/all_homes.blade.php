@@ -1,61 +1,63 @@
 @extends('admin.admin_dashboard')
 @section('admin')
-
     <div class="page-content">
-        <nav class="page-breadcrumb">
-            <ol class="breadcrumb">
-                <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
-                    Add Home Content
-                </button>
-            </ol>
-        </nav>
+        @if ($allHomes->isEmpty())
+            <nav class="page-breadcrumb">
+                <ol class="breadcrumb">
+                    <button type="button" class="btn btn-inverse-info" data-bs-toggle="modal" data-bs-target="#addModal">
+                        Add Home Content
+                    </button>
+                </ol>
+            </nav>
 
-        <!-- Add Category Modal -->
-        <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">Add Home</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="btn-close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="addBrandForm" method="POST" action="" class="forms-sample"
-                            onsubmit="event.preventDefault(); StoreBrand();">
-                            @csrf
-                            <div class="form-group mb-3">
-                                <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control" id="name">
-                                <span id="name_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="website" class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" id="email">
-                                <span id="email_error" class="text-danger"></span> <!-- Error message placeholder -->
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="image" class="form-label">Image</label>
-                                <input class="form-control" name="image" type="file" id="image">
-                                <span id="image_error" class="text-danger"></span>
-                            </div>
-                            <!-- Image preview -->
-                            <div class="form-group">
-                                <img id="showImage" src="#" alt="Image Preview"
-                                    style="max-width: 200px; display: none;">
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
+            <!-- Add Home Modal -->
+            <div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addModalLabel">Add Home</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="btn-close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addBrandForm" method="POST" action="" class="forms-sample"
+                                onsubmit="event.preventDefault(); StoreHome();">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <label for="name" class="form-label">Name</label>
+                                    <input type="text" name="name" class="form-control" id="name">
+                                    <span id="name_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="website" class="form-label">Email</label>
+                                    <input type="text" name="email" class="form-control" id="email">
+                                    <span id="email_error" class="text-danger"></span> <!-- Error message placeholder -->
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label for="image" class="form-label">Image</label>
+                                    <input class="form-control" name="image" type="file" id="image">
+                                    <span id="image_error" class="text-danger"></span>
+                                </div>
+                                <!-- Image preview -->
+                                <div class="form-group">
+                                    <img id="showImage" src="#" alt="Image Preview"
+                                        style="max-width: 200px; display: none;">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
 
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        {{-- ALL brand --}}
+        @endif
+        
+        {{-- ALL Home --}}
         <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
-                        <h6 class="card-title">Home</h6>
+                        <h6 class="card-title">Home Contents</h6>
 
                         <div class="table-responsive">
                             <table id="dataTableExample" class="table">
@@ -94,7 +96,6 @@
                                         </tr>
                                     @endif
                                 </tbody>
-
                             </table>
                         </div>
                     </div>
@@ -103,58 +104,10 @@
         </div>
     </div>
 
-    <!-- Edit Brand Modal -->
-    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Update Home</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form id="editBrandForm" method="POST" enctype="multipart/form-data" class="forms-sample"
-                        onsubmit="event.preventDefault(); UpdateBrand();">
-                        @csrf
-                        <!-- Simulate PATCH method -->
-                        <input type="hidden" name="_method" value="PATCH">
-                        <input type="hidden" name="brand_id" id="brand_id">
-
-                        <div class="form-group mb-3">
-                            <label for="edit_name" class="form-label">Name</label>
-                            <input type="text" name="edit_name" class="form-control" id="edit_name">
-                            <span id="edit_name_error" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="edit_email" class="form-label">Email</label>
-                            <input type="text" name="edit_email" class="form-control" id="edit_email">
-                            <span id="edit_email_error" class="text-danger"></span>
-                        </div>
-
-                        <div class="form-group mb-3">
-                            <label for="edit_image" class="form-label">Image</label>
-                            <input class="form-control" name="edit_image" type="file" id="edit_image">
-                        </div>
-
-                        <!-- Image preview -->
-                        <div class="form-group mb-3">
-                            <img id="edit_showImage" class="wd-100 rounded-circle"
-                                src="{{ !empty($allHomes->logo) ? url('upload/brand/' . $allHomes->logo) : url('upload/no_image.jpg') }}"
-                                alt="profile">
-                        </div>
-
-                        <button type="submit" class="btn btn-primary">Save changes</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- Store Brand --}}
+    {{-- Store Home --}}
     <script type="text/javascript">
-        function StoreBrand() {
+        function StoreHome() {
             var formData = new FormData(document.getElementById('addBrandForm'));
-
             $.ajax({
                 type: 'POST',
                 url: '{{ route('home.store') }}',
@@ -191,38 +144,81 @@
         }
     </script>
 
+    <!-- Edit Home Modal -->
+    <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editModalLabel">Update Home</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editHomeForm" method="POST" enctype="multipart/form-data" class="forms-sample"
+                        onsubmit="event.preventDefault(); UpdateHome();">
+                        @csrf
+                        <!-- Simulate PATCH method -->
+                        <input type="hidden" name="_method" value="PATCH">
+                        <input type="hidden" name="home_id" id= "home_id">
+
+                        <div class="form-group mb-3">
+                            <label for="edit_name" class="form-label">Name</label>
+                            <input type="text" name="edit_name" class="form-control" id="edit_name">
+                            <span id="edit_name_error" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="edit_email" class="form-label">Email</label>
+                            <input type="text" name="edit_email" class="form-control" id="edit_email">
+                            <span id="edit_email_error" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="edit_image" class="form-label">Image</label>
+                            <input class="form-control" name="edit_image" type="file" id="edit_image">
+                        </div>
+
+                        <!-- Image preview -->
+                        <div class="form-group mb-3">
+                            <img id="edit_showImage" class="wd-100 rounded-circle"
+                                src="{{ !empty($allHomes->image) ? url('upload/brand/' . $allHomes->image) : url('upload/no_image.jpg') }}"
+                                alt="profile" style="width: 90px; height: 60px;">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     {{-- Preview Image --}}
     <script type="text/javascript">
         $(document).ready(function() {
-            $('#image').change(function(e) {
+            $('#edit_image').change(function(e) {
                 var reader = new FileReader();
                 reader.onload = function(e) {
-                    $('#showImage').attr('src', e.target.result).css('display',
-                        'block'); // Ensure it displays
+                    $('#edit_showImage').attr('src', e.target.result).css('display', 'block');
                 }
                 reader.readAsDataURL(e.target.files[0]);
             });
         });
     </script>
 
-    {{-- Edit Brand --}}
+    {{-- Edit Home --}}
     <script type="text/javascript">
-        function brandEdit(brand_id) {
+        function brandEdit(home_id) {
             $.ajax({
                 type: 'GET',
-                url: '/brand/' + brand_id + '/edit', // Ensure this is the correct route
+                url: '/home/' + home_id + '/edit', // Ensure this is the correct route
                 dataType: 'json',
                 success: function(data) {
                     if (data.error) {
                         console.log(data.error);
                     } else {
-                        $('#brand_id').val(data.brand_id);
-                        $('#edit_name').val(data.brand_name);
-                        $('#edit_banglaInputText').val(data.name_bangla);
-                        $('#edit_description').val(data.description);
-                        $('#edit_website').val(data.website);
-                        // $('#edit_image').val(data.logo);
-                        var imgSrc = data.logo ? data.logo : '/upload/no_image.jpg';
+                        $('#home_id').val(data.id);
+                        $('#edit_name').val(data.name);
+                        $('#edit_email').val(data.email);
+                        var imgSrc = data.image ? data.image : '/upload/no_image.jpg';
                         $('#edit_showImage').attr('src', imgSrc);
                         $('#editModal').modal('show'); // Open modal with data loaded
 
@@ -235,16 +231,15 @@
         }
     </script>
 
-    {{-- Update Brand --}}
+    {{-- Update Home --}}
     <script type="text/javascript">
-        function UpdateBrand() {
-            var formData = new FormData(document.getElementById('editBrandForm'));
-            var brandId = $('#brand_id').val(); // Get the brand ID
-            console.log(brandId);
+        function UpdateHome() {
+            var formData = new FormData(document.getElementById('editHomeForm'));
+            var homeId = $('#home_id').val(); // Get the brand ID
 
             $.ajax({
                 type: 'POST', // POST method to support _method PATCH
-                url: '/brand/' + brandId,
+                url: '/home/' + homeId,
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -279,7 +274,7 @@
         }
     </script>
 
-    {{-- Delete Brand --}}
+    {{-- Delete Home --}}
     <script type="text/javascript">
         $(document).on('click', '.delete-btn', function(e) {
             e.preventDefault();
@@ -333,5 +328,4 @@
             });
         });
     </script>
-
 @endsection

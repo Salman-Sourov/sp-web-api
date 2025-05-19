@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Home;
 
 use Illuminate\Http\Request;
@@ -12,7 +13,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $allHomes = Home::all();    
+        $allHomes = Home::all();
         return view('backend.all_homes', compact('allHomes'));
     }
 
@@ -57,10 +58,7 @@ class HomeController extends Controller
             'alert-type' => 'success' // Success notification type
         );
 
-        // Redirect back to the list page with the notification
-        // return redirect()->back()->with($notification);
-        // Return success response
-        return response()->json(['success' => true, 'message' => 'Brand added successfully']);
+        return response()->json(['success' => true, 'message' => 'Home content added successfully']);
     }
 
     /**
@@ -76,7 +74,18 @@ class HomeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $home = Home::find($id);
+
+        if ($home) {
+            return response()->json([
+                'id' => $home->id ?? null,
+                'name' => $home->name ?? null,
+                'email' => $home->email ?? null,
+                'image' => $home->image ?? null,
+            ]);
+        } else {
+            return response()->json(['error' => true, 'message' => 'Home not found']);
+        }
     }
 
     /**
@@ -84,14 +93,57 @@ class HomeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $home = Home::find($id);
+
+        if ($request->file('edit_image')) {
+            // Delete old image if it exists
+            if (!empty($home->image) && file_exists(public_path($home->image))) {
+                unlink(public_path($home->image));
+            }
+
+            // Save new image
+            $image = $request->file('edit_image');
+            $photoName = date("Y-m-d") . '_' . time() . '.' . $image->getClientOriginalExtension();
+            $directory = 'upload/home/';
+            $image->move(public_path($directory), $photoName); // move to public path
+            $home->image = $directory . $photoName;
+        }
+
+        // Update all fields (including image if changed)
+        $home->name = $request->edit_name;
+        $home->email = $request->edit_email;
+
+        $home->save(); // Save all changes at once
+
+        return response()->json(['success' => true, 'message' => 'Home updated successfully']);
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $home = Home::find($id);
+
+        if ($home) {
+            // Check if logo exists and delete the file
+            if (file_exists(public_path($home->image)) && !empty($home->image)) {
+                unlink(public_path($home->image)); // Delete logo file
+            }
+
+            // Delete the brand record
+            $home->delete();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Home deleted successfully.'
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Home not found.'
+        ]);
     }
 }

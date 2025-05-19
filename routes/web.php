@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/logout', [AdminController::class, 'adminLogout'])->name('admin.logout');
 
     Route::resource('home', HomeController::class);
+    Route::resource('about', AboutController::class)->only(['index', 'update']);
+
+    
 });
 
 require __DIR__.'/auth.php';
