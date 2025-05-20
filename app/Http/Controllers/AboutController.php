@@ -52,33 +52,38 @@ class AboutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id = null)
     {
         $request->validate([
-        'about' => 'nullable|string|max:1000',
-        'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-    ]);
+            'about' => 'nullable|string|max:1000',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
 
-    $about = About::findOrFail($id);
+        // Get or create About record
+        $about = $id ? About::find($id) : About::first();
 
-    $about->about = $request->about;
-
-    if ($request->hasFile('image')) {
-        // Delete old image
-        if ($about->image && File::exists(public_path($about->image))) {
-            File::delete(public_path($about->image));
+        if (!$about) {
+            $about = new About();
         }
 
-        $file = $request->file('image');
-        $filename = date('YmdHi') . '_' . $file->getClientOriginalName();
-        $file->move(public_path('upload/about'), $filename);
-        $about->image = 'upload/about/' . $filename;
+        $about->about = $request->about;
+
+        if ($request->hasFile('image')) {
+            if ($about->image && File::exists(public_path($about->image))) {
+                File::delete(public_path($about->image));
+            }
+
+            $file = $request->file('image');
+            $filename = date('YmdHi') . '_' . $file->getClientOriginalName();
+            $file->move(public_path('upload/about'), $filename);
+            $about->image = 'upload/about/' . $filename;
+        }
+
+        $about->save();
+
+        return redirect()->back()->with('success', 'About section updated successfully.');
     }
 
-    $about->save();
-
-    return redirect()->back()->with('success', 'About section updated successfully.');
-    }
 
     /**
      * Remove the specified resource from storage.

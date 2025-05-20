@@ -5,38 +5,40 @@
     <div class="page-content">
         <div class="row profile-body">
             <!-- middle wrapper start -->
-            <div class="col-md-8 col-xl-8 middle-wrapper">
+            <div class="col-md-12 col-xl-12 middle-wrapper">
                 <div class="row">
                     <div class="card">
                         <div class="card-body">
-
                             <h6 class="card-title">About Section</h6>
+                            @php
+                                $isEdit = isset($about);
+                            @endphp
 
-                            <form id="myForm" method="POST" action="{{ route('about.update', $abouts->id) }}"
+                            <form id="myForm" method="POST"
+                                action="{{ $isEdit ? route('about.update', $about->id) : route('about.update', 0) }}"
                                 class="forms-sample" enctype="multipart/form-data">
                                 @csrf
                                 @method('PUT')
 
                                 <div class="form-group mb-3">
                                     <label class="form-label">About Text</label>
-                                    <input type="text" name="about" class="form-control" value="{{ $abouts->about }}">
+                                    <textarea name="about" class="form-control" rows="8">{{ $about->about ?? '' }}</textarea>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-sm-5">
-                                        <label class="form-label">Upload Logo</label>
+                                        <label class="form-label">Upload Image</label>
                                         <input type="file" name="image" id="logoInput" class="form-control"
                                             accept="image/*">
                                         <br>
                                         <img id="showLogo" class="wd-80"
-                                            src="{{ !empty($abouts->image) ? asset($abouts->image) : url('upload/no_image.jpg') }}"
+                                            src="{{ !empty($about->image) ? asset($about->image) : url('upload/no_image.jpg') }}"
                                             alt="logo" width="80">
                                     </div>
                                 </div>
 
                                 <button type="submit" class="btn btn-primary me-2">Save Changes</button>
                             </form>
-
 
                         </div>
                     </div>

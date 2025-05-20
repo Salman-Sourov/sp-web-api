@@ -42,7 +42,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('home', HomeController::class);
     Route::resource('about', AboutController::class)->only(['index', 'update']);
-
     
 });
 
