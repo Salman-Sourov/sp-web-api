@@ -32,6 +32,25 @@
                 </a>
             </li>
 
+            {{-- Media --}}
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" href="#attributeset" role="button" aria-expanded="false"
+                    aria-controls="attributeset">
+                    <i class="link-icon" data-feather="aperture"></i>
+                    <span class="link-title">Media</span>
+                    <i class="link-arrow" data-feather="chevron-down"></i>
+                </a>
+                <div class="collapse" id="attributeset">
+                    <ul class="nav sub-menu">
+                        <li class="nav-item">
+                            <a href="{{ route('media.index') }}" class="nav-link">All Media</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('media.create') }}" class="nav-link">Inactive Media</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

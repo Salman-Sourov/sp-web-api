@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,11 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('home', HomeController::class);
     Route::resource('about', AboutController::class)->only(['index', 'update']);
-    
+
+    Route::resource('media', MediaController::class);
+    Route::post('/media/changeStatus', [MediaController::class, 'changeStatus'])->name('media.changeStatus');
+    Route::delete('/media/{id}', [MediaController::class, 'mediaDelete'])->name('media.delete');
+
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
