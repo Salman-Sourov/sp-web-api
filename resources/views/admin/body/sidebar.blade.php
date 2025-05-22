@@ -51,6 +51,14 @@
                     </ul>
                 </div>
             </li>
+
+            {{-- Brand --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('brand.index') }}">
+                    <i class="link-icon" data-feather="tag"></i>
+                    <span class="link-title">Brand</span>
+                </a>
+            </li>
         </ul>
     </div>
 </nav>

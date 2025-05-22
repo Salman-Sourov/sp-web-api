@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('media', MediaController::class);
     Route::post('/media/changeStatus', [MediaController::class, 'changeStatus'])->name('media.changeStatus');
     Route::delete('/media/{id}', [MediaController::class, 'mediaDelete'])->name('media.delete');
+
+    Route::resource('brand', BrandController::class);
 
 });
 

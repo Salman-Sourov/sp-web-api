@@ -30,33 +30,21 @@ class HomeController extends Controller
      */
     public function store(Request $request)
     {
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+        ];
+
         if ($request->file('image')) {
             $image = $request->file('image');
             $photoName = date("Y-m-d") . '.' . rand() . '.' . time() . '.' . $image->getClientOriginalExtension();
             $directory = 'upload/home/';
             $image->move($directory, $photoName);
+            $data['image'] = $directory . $photoName; // Add image to data array
         }
 
-        // Store brand data in the database
-        if ($request->file('image')) {
-            $home = Home::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'image' => $directory . $photoName,
-                'status' => 'active',
-            ]);
-        } else {
-            $home = Home::create([
-                'name' => $request->name,
-                'email' => $request->email,
-            ]);
-        }
-
-        // Flash message for success
-        $notification = array(
-            'message' => 'Home Data inserted', // The message you want to display
-            'alert-type' => 'success' // Success notification type
-        );
+        // Store home data in the database
+        $home = Home::create($data);
 
         return response()->json(['success' => true, 'message' => 'Home content added successfully']);
     }
