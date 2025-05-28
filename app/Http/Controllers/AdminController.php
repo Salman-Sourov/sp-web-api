@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use App\Models\Media;
+use App\Models\Brand;
 
 use Illuminate\Http\Request;
 
@@ -12,7 +14,10 @@ class AdminController extends Controller
 {
     public function adminHome()
     {
-        return view('admin.index');
+        $allmedia = Media::all();
+        $allbrand = Brand::all();
+        $users = User::all();
+        return view('admin.index',compact('allmedia','allbrand','users'));
     }
 
       public function AdminProfile()

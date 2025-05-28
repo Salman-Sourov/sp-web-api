@@ -19,7 +19,7 @@
             {{-- Home --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('home.index') }}">
-                    <i class="link-icon" data-feather="tag"></i>
+                    <i class="link-icon" data-feather="home"></i>
                     <span class="link-title">Home</span>
                 </a>
             </li>
@@ -27,7 +27,7 @@
             {{-- About --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('about.index') }}">
-                    <i class="link-icon" data-feather="tag"></i>
+                    <i class="link-icon" data-feather="loader"></i>
                     <span class="link-title">About</span>
                 </a>
             </li>
@@ -36,7 +36,7 @@
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#attributeset" role="button" aria-expanded="false"
                     aria-controls="attributeset">
-                    <i class="link-icon" data-feather="aperture"></i>
+                    <i class="link-icon" data-feather="video"></i>
                     <span class="link-title">Media</span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
@@ -55,7 +55,7 @@
             {{-- Brand --}}
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('brand.index') }}">
-                    <i class="link-icon" data-feather="tag"></i>
+                    <i class="link-icon" data-feather="shopping-bag"></i>
                     <span class="link-title">Brand</span>
                 </a>
             </li>

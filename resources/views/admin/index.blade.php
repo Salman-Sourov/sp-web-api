@@ -8,18 +8,18 @@
     </div>
   </div>
 
-  {{-- <div class="row">
+  <div class="row">
     <div class="col-12 col-xl-12 stretch-card">
       <div class="row flex-grow-1">
         <div class="col-md-4 grid-margin stretch-card">
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-baseline">
-                <h6 class="card-title mb-0">Total Orders</h6>
+                <h6 class="card-title mb-0">Total Video</h6>
               </div>
               <div class="row">
                 <div class="col-6 col-md-12 col-xl-5">
-                  <h3 class="mb-2">{{ $orders->count() }}</h3>
+                  <h3 class="mb-2">{{ $allmedia->count() }}</h3>
                   <div class="d-flex align-items-baseline">
                     <p class="text-success">
                       <span>+3.3%</span>
@@ -38,11 +38,11 @@
           <div class="card">
             <div class="card-body">
               <div class="d-flex justify-content-between align-items-baseline">
-                <h6 class="card-title mb-0">Total Products</h6>
+                <h6 class="card-title mb-0">Total Brands</h6>
               </div>
               <div class="row">
                 <div class="col-6 col-md-12 col-xl-5">
-                  <h3 class="mb-2">{{ $products->count() }}</h3>
+                  <h3 class="mb-2">{{ $allbrand->count() }}</h3>
                   <div class="d-flex align-items-baseline">
                     <p class="text-danger">
                       <span>-2.8%</span>
@@ -84,7 +84,7 @@
     </div>
   </div> <!-- row -->
 
-  <div class="row">
+  {{-- <div class="row">
     <div class="col-12 col-xl-12 grid-margin stretch-card">
       <div class="card overflow-hidden">
         <div class="card-body">
@@ -95,7 +95,7 @@
           </div>
           <div class="row align-items-start">
             <div class="col-md-7">
-              <p class="tx-90 mb-3 mb-md-0">Total Revenue: {{ $revenue }}</p>
+              <p class="tx-90 mb-3 mb-md-0">Total Revenue:</p>
             </div>
             <div class="col-md-5 d-flex justify-content-md-end">
               <div class="btn-group mb-3 mb-md-0" role="group" aria-label="Basic example">
@@ -119,7 +119,7 @@
           <div class="d-flex justify-content-between align-items-baseline mb-2">
             <h6 class="card-title mb-0">Monthly sales</h6>
           </div>
-          <p class="">Total Monthly Sales: {{ $monthlySales }}</p>
+          <p class="">Total Monthly Sales:</p>
           <div id="monthlySalesChart"></div>
         </div> 
       </div>
